@@ -22,7 +22,8 @@
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
 function parseDataFromRfc2822(value) {
-   throw new Error('Not implemented');
+   return Date.parse(value);
+   
 }
 
 /**
@@ -37,7 +38,8 @@ function parseDataFromRfc2822(value) {
  *    '2016-01-19T08:07:37Z' => Date()
  */
 function parseDataFromIso8601(value) {
-   throw new Error('Not implemented');
+   return Date.parse(value);
+   
 }
 
 
@@ -56,7 +58,9 @@ function parseDataFromIso8601(value) {
  *    Date(2015,1,1)    => false
  */
 function isLeapYear(date) {
-   throw new Error('Not implemented');
+   let Year = date.getFullYear();
+   return (Year % 400 == 0) || (Year % 4 == 0 && Year % 100 != 0) 
+   
 }
 
 
@@ -76,13 +80,29 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
 function timeSpanToString(startDate, endDate) {
-   throw new Error('Not implemented');
+   let TimespanRepresention = '';
+   let TimespanHours = endDate.getHours() - startDate.getHours();
+   let TimespanMinutes = endDate.getMinutes() - startDate.getMinutes();
+   let TimespanSeconds = endDate.getSeconds() - startDate.getSeconds();
+   let TimespanMilliseconds = endDate.getMilliseconds() - startDate.getMilliseconds();
+   TimespanRepresention += (TimespanHours >= 10 ? TimespanHours : '0'+TimespanHours) + ':';
+   TimespanRepresention += (TimespanMinutes >= 10 ? TimespanMinutes : '0'+TimespanMinutes) + ':';
+   TimespanRepresention += (TimespanSeconds >= 10 ? TimespanSeconds : '0'+TimespanSeconds) + '.';
+   if (TimespanMilliseconds < 10)
+      TimespanRepresention += '00'+TimespanMilliseconds;
+   else
+      if (TimespanMilliseconds < 100)
+         TimespanRepresention += '0'+TimespanMilliseconds;
+      else
+         TimespanRepresention += TimespanMilliseconds; 
+   return TimespanRepresention;
+   
 }
 
 
 /**
  * Returns the angle (in radians) between the hands of an analog clock for the specified Greenwich time.
- * If you have problem with solution please read: https://en.wikipedia.org/wiki/Clock_angle_problem
+ * If you have problem with solution please read: 2016,3,5, 0, 0
  * 
  * @param {date} date
  * @return {number}
@@ -94,7 +114,15 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
 function angleBetweenClockHands(date) {
-    throw new Error('Not implemented');
+    let Hours = date.getUTCHours() >= 12 ? date.getUTCHours() - 12 : date.getUTCHours();
+   
+    let Minutes = date.getUTCMinutes();
+  
+    let Angle = Math.abs(0.5 * (60 * Hours - 11 * Minutes)) / 180 * Math.PI;
+     
+    return (Angle > Math.PI ? Angle - Math.PI : Angle);
+
+    
 }
 
 
