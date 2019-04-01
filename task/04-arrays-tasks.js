@@ -368,7 +368,7 @@ function get3TopItems(arr) {
  */
 function getPositivesCount(arr) {
    let PrevVal = 0;
-   return arr.reduce(function(PrevVal, item, index, Arr,)
+   return arr.reduce(function(PrevVal, item, index, Arr)
    {
       return item > 0 && typeof(item)==='number' ? PrevVal + 1 : PrevVal;
    }, 0);
